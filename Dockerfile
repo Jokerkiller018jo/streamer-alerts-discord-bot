@@ -21,6 +21,9 @@ FROM node:22-alpine AS runtime
 WORKDIR /app
 ENV NODE_ENV=production
 
+# Pre-create the data directory with correct ownership before dropping privileges.
+RUN mkdir -p /app/data && chown -R node:node /app/data
+
 # Run unprivileged. The node image already provides this user.
 USER node
 
